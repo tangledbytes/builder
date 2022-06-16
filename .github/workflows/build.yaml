@@ -10,7 +10,13 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
       - uses: actions/setup-go@v3
+      - name: Setup artifact director
+        run:  mkdir -p $GITHUB_WORKSPACE/artifacts
       - name: Execute script
         run: |
           chmod +x ./script.sh
           ./script.sh
+      - uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: $GITHUB_WORKSPACE/artifact
