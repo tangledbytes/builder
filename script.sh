@@ -1,3 +1,3 @@
 echo "I am running"
 
-echo "I am running" > /app/artifacts/temp.txt
+echo "I am running" > $GITHUB_WORKSPACE/artifacts/temp.txt
