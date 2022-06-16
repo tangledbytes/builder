@@ -19,4 +19,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: $GITHUB_WORKSPACE/artifact
+          path: $GITHUB_WORKSPACE/artifacts
