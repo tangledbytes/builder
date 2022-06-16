@@ -1,5 +1,8 @@
 #/bin/bash
 
+export GOROOT=`go env GOROOT`
+export GOPATH=`go env GOPATH`
+
 echo "Cloning NooBaa Operator..."
 git clone --depth=1 https://github.com/noobaa/noobaa-operator.git
 
