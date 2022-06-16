@@ -4,6 +4,7 @@ echo "Cloning NooBaa Operator..."
 git clone --depth=1 https://github.com/noobaa/noobaa-operator.git
 
 echo "Build NooBaa Operator..."
+cd noobaa-operator
 make gen && make gen-api && make
 
 echo "Dump docker image as tar file..."
