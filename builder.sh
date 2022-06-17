@@ -43,5 +43,5 @@ sleep 15
 # Download the artifacts produced
 RUN_ID=`gh run list -L 1 -w build --json databaseId -t '{{ (index . 0).databaseId | printf "%.f" }}' -R $REPO`
 gh run watch -R $REPO $RUN_ID --exit-status
-gh run view -R $REPO $RUN_ID --log --exit-status
+gh run view -R $REPO $RUN_ID --log --exit-status | grep "build\tExecute script"
 gh run download $RUN_ID -R $REPO
