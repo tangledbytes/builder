@@ -13,11 +13,14 @@ cd noobaa-operator
 # Build the assets
 make gen && make gen-api && make
 
-# Convert docker images to a tar file
-docker save noobaa/noobaa-operator:5.12.0 > noobaa-operator.tar
-docker save noobaa/noobaa-operator-catalog:5.12.0 > noobaa-operator-catalog.tar
+# Push the docker image to ttl.sh
+export IMAGE_NAME=$(uuidgen)
+docker tag noobaa/noobaa-operator:5.12.0 $IMAGE_NAME
+docker push ttl.sh/$IMAGE_NAME:2h
+
+export IMAGE_NAME=$(uuidgen)
+docker tag noobaa/noobaa-operator-catalog:5.12.0 $IMAGE_NAME
+docker push ttl.sh/$IMAGE_NAME:2h
 
 # Upload the assets
-mv noobaa-operator.tar $GITHUB_WORKSPACE/artifacts/noobaa-operator.tar
-mv noobaa-operator-catalog.tar $GITHUB_WORKSPACE/artifacts/noobaa-operator-catalog.tar
 mv build $GITHUB_WORKSPACE/artifacts/build
