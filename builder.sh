@@ -32,5 +32,5 @@ rm -rf ${TMPDIR}builder
 # Download the artifacts produced
 RUN_ID=`gh run list -L 1 -w build --json databaseId -t '{{ (index . 0).databaseId | printf "%.f" }}' -R $REPO`
 
-gh run view -i 1 -R $REPO $RUN_ID --log --exit-status
+gh run view -R $REPO $RUN_ID --log --exit-status
 gh run download $RUN_ID -R $REPO
