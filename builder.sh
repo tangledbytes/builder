@@ -20,7 +20,7 @@ git pull
 
 # Move the script to the builder
 cd $WD
-mv $NEW_SCRIPT $BUILD_DIR/script.sh
+cp $NEW_SCRIPT $BUILD_DIR/script.sh
 cd $BUILD_DIR
 
 # Check if there is anything to be commited
