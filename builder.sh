@@ -5,29 +5,33 @@ set -o pipefail
 REPO=utkarsh-pro/builder
 NEW_SCRIPT=${1:-script.sh}
 WD=$(pwd)
+BUILD_DIR=${TMPDIR}builder
 
 # Clone the builder repo if it doesn't exist
-if [ ! -d ${TMPDIR}builder ]; then
-	git clone git@github.com:$REPO.git ${TMPDIR}builder
+if [ ! -d $BUILD_DIR ]; then
+	git clone git@github.com:$REPO.git $BUILD_DIR
 fi
 
-# Move the new script to the builder repo
-mv $NEW_SCRIPT ${TMPDIR}builder/script.sh
+# Move into the builder repo
+cd $BUILD_DIR
 
-# Add and commit the new script
-cd ${TMPDIR}builder
+# Pull the latest changes
 git pull
-git add script.sh
-git commit -m "Update script"
 
-# Push the changes to the repo
-git push origin master
+# Move the script to the builder
+cd $WD
+mv $NEW_SCRIPT ${TMPDIR}builder/script.sh
+cd $BUILD_DIR
+
+# Check if there is anything to be commited
+if [ -n "$(git status --porcelain)" ]; then
+	git add .
+	git commit -m "Update script"
+	git push
+fi
 
 # Get back to the previous working directory
 cd $WD
-
-# Remove the builder repo
-rm -rf ${TMPDIR}builder
 
 # Download the artifacts produced
 RUN_ID=`gh run list -L 1 -w build --json databaseId -t '{{ (index . 0).databaseId | printf "%.f" }}' -R $REPO`
