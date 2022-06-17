@@ -20,4 +20,4 @@ docker save noobaa/noobaa-operator-catalog:5.12.0 > noobaa-operator-catalog.tar
 # Upload the assets
 mv noobaa-operator.tar $GITHUB_WORKSPACE/artifacts/noobaa-operator.tar
 mv noobaa-operator-catalog.tar $GITHUB_WORKSPACE/artifacts/noobaa-operator-catalog.tar
-mv output $GITHUB_WORKSPACE/artifacts/output
+mv build $GITHUB_WORKSPACE/artifacts/build
