@@ -1,3 +1,3 @@
 #/bin/bash
 
-echo Hello world! I was created in a Github Workflow! > $GITHUB_WORKSPACE/artifacts/message
+echo "This is a message that was generated in the Github Action" > $GITHUB_WORKSPACE/artifacts/message
