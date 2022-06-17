@@ -6,14 +6,17 @@ REPO=utkarsh-pro/builder
 NEW_SCRIPT=${1:-script.sh}
 WD=$(pwd)
 
-# Clone the builder repo
-git clone https://github.com/$REPO.git ${TMPDIR}builder
+# Clone the builder repo if it doesn't exist
+if [ ! -d ${TMPDIR}builder ]; then
+	git clone git@github.com:$REPO.git ${TMPDIR}builder
+fi
 
 # Move the new script to the builder repo
 mv $NEW_SCRIPT ${TMPDIR}builder/script.sh
 
 # Add and commit the new script
 cd ${TMPDIR}builder
+git pull
 git add script.sh
 git commit -m "Update script"
 
