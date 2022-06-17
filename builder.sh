@@ -33,6 +33,9 @@ fi
 # Get back to the previous working directory
 cd $WD
 
+# Sleep for a while to let the job pick up by the runner
+sleep 30
+
 # Download the artifacts produced
 RUN_ID=`gh run list -L 1 -w build --json databaseId -t '{{ (index . 0).databaseId | printf "%.f" }}' -R $REPO`
 
