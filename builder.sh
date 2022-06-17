@@ -38,10 +38,10 @@ cd $WD
 
 # Sleep for a while to let the job pick up by the runner
 echo "Sleeping for a while to let the job pick up by the runner..."
-sleep 30
+sleep 15
 
 # Download the artifacts produced
 RUN_ID=`gh run list -L 1 -w build --json databaseId -t '{{ (index . 0).databaseId | printf "%.f" }}' -R $REPO`
-
+gh run watch -R $REPO $RUN_ID --exit-status
 gh run view -R $REPO $RUN_ID --log --exit-status
 gh run download $RUN_ID -R $REPO
