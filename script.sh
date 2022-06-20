@@ -33,4 +33,4 @@ docker_push noobaa/noobaa-operator:5.12.0
 docker_push noobaa/noobaa-operator-catalog:5.12.0
 
 # Upload the assets
-mv build $GITHUB_WORKSPACE/artifacts/build
+# mv build $GITHUB_WORKSPACE/artifacts/build
