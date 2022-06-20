@@ -6,7 +6,7 @@ export GOROOT=`go env GOROOT`
 export GOPATH=`go env GOPATH`
 
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/feature/loadbalancer-cidr-control https://github.com/utkarsh-pro/noobaa-operator.git
+git clone --depth=1 -b utkarsh-pro/feature/multi-ns-bc https://github.com/utkarsh-pro/noobaa-operator.git
 
 cd noobaa-operator
 
