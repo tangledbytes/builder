@@ -21,7 +21,7 @@ function docker_push() {
 }
 
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/temp/feature/multi-ns-bc https://github.com/utkarsh-pro/noobaa-operator.git
+git clone --depth=1 -b utkarsh-pro/feature/multi-ns-bc https://github.com/utkarsh-pro/noobaa-operator.git
 
 cd noobaa-operator
 
