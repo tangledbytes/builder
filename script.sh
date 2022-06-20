@@ -29,7 +29,7 @@ cd noobaa-operator
 make gen && make gen-api && make
 
 # Push the docker image to ttl.sh
-docker_push noobaa-operator:5.12.0
+docker_push noobaa/noobaa-operator:5.12.0
 docker_push noobaa/noobaa-operator-catalog:5.12.0
 
 # Upload the assets
