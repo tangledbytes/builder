@@ -7,7 +7,7 @@ export GOPATH=`go env GOPATH`
 
 function registry() {
 	local IMAGE_NAME=$(uuidgen)
-	local REF=ttl.sh/$IMAGE_NAME:2h
+	local REF=ttl.sh/$IMAGE_NAME:2d
 
 	echo $REF
 }
