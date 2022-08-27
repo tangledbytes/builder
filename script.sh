@@ -30,4 +30,4 @@ docker_push noobaa
 
 # Upload the assets
 # mv build $GITHUB_WORKSPACE/artifacts/build
-# FORCE
+# FORCE2
