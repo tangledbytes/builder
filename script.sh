@@ -2,9 +2,6 @@
 
 set -e
 
-export GOROOT=`go env GOROOT`
-export GOPATH=`go env GOPATH`
-
 function registry() {
 	local IMAGE_NAME=$(uuidgen)
 	local REF=ttl.sh/$IMAGE_NAME:2d
@@ -17,20 +14,20 @@ function docker_push() {
 	docker tag $1 $REF
 	docker push $REF
 
-	echo "[PUSHED]: $REF"
+	echo "Pushed $REF"
 }
 
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/temp/cleanup/allowed-buckets https://github.com/utkarsh-pro/noobaa-operator.git
+git clone --depth=1 -b utkarsh-pro/temp/upgrade/node-14-to-16 https://github.com/utkarsh-pro/noobaa-core.git
 
-cd noobaa-operator
+cd noobaa-core
 
 # Build the assets
-make gen && make gen-api && make
+make noobaa
 
 # Push the docker image to ttl.sh
-docker_push noobaa/noobaa-operator:5.12.0
-docker_push noobaa/noobaa-operator-catalog:5.12.0
+docker_push noobaa
 
 # Upload the assets
 # mv build $GITHUB_WORKSPACE/artifacts/build
+# FORCE4
