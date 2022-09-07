@@ -31,6 +31,9 @@ if [ -n "$(git status --porcelain)" ]; then
 	git add .
 	git commit -m "Update script"
 	git push
+else
+	echo "No change detected in the script. Forcing re-run..."
+	gh workflow run build
 fi
 
 # Get back to the previous working directory
