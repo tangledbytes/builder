@@ -2,22 +2,32 @@
 
 set -e
 
-export GOROOT=`go env GOROOT`
-export GOPATH=`go env GOPATH`
+function registry() {
+	local IMAGE_NAME=$(uuidgen)
+	local REF=ttl.sh/$IMAGE_NAME:2d
+
+	echo $REF
+}
+
+function docker_push() {
+	local REF=`registry`
+	docker tag $1 $REF
+	docker push $REF
+
+	echo "Pushed $REF"
+}
 
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/feature/loadbalancer-cidr-control https://github.com/utkarsh-pro/noobaa-operator.git
+git clone --depth=1 -b utkarsh-pro/temp/cleanup/allowed-buckets https://github.com/utkarsh-pro/noobaa-core.git
 
-cd noobaa-operator
+cd noobaa-core
 
 # Build the assets
-make gen && make gen-api && make
+make noobaa
 
-# Convert docker images to a tar file
-docker save noobaa/noobaa-operator:5.12.0 > noobaa-operator.tar
-docker save noobaa/noobaa-operator-catalog:5.12.0 > noobaa-operator-catalog.tar
+# Push the docker image to ttl.sh
+docker_push noobaa
 
 # Upload the assets
-mv noobaa-operator.tar $GITHUB_WORKSPACE/artifacts/noobaa-operator.tar
-mv noobaa-operator-catalog.tar $GITHUB_WORKSPACE/artifacts/noobaa-operator-catalog.tar
-mv build $GITHUB_WORKSPACE/artifacts/build
+# mv build $GITHUB_WORKSPACE/artifacts/build
+# FORCE4
