@@ -5,6 +5,5 @@ git clone --depth=1 -b utkarsh-pro/temp/upgrade/node-14-to-16 https://github.com
 
 # Run tests
 cd noobaa-core
-npm i
-npm run build
-npm t
+make tester || exit 1
+docker run --privileged --rm --name test1 noobaa-tester npm t || exit 1
