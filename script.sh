@@ -1,9 +1,8 @@
 #!/bin/bash
 
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/temp/upgrade/node-14-to-16 https://github.com/utkarsh-pro/noobaa-core.git
+git clone --depth=1 -b utkarsh-pro/upgrade/node-14-to-16 https://github.com/utkarsh-pro/noobaa-core.git
 
 # Run tests
 cd noobaa-core
-make tester || exit 1
-docker run --privileged --rm --name test1 noobaa-tester npm t || exit 1
+make test-postgres
