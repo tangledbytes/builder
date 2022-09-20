@@ -18,7 +18,7 @@ function docker_push() {
 }
 
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/fix/anon-user-actions https://github.com/utkarsh-pro/noobaa-core.git
+git clone --depth=1 -b master https://github.com/noobaa/noobaa-core.git
 
 cd noobaa-core
 
