@@ -8,15 +8,17 @@ cd noobaa-core
 
 # Git Commit
 COMMIT=$(git log --format="%H" -n 1)
+IMAGE_NAME="noobaa-tester"
+REMOTE_IMAGE="ttl.sh/noobaa-tester-$COMMIT:2d"
 
 # Check if image already exists on docker hub
-if docker pull ttl.sh/noobaa-tester:$COMMIT; then
+if docker pull $REMOTE_IMAGE; then
 	echo "Image already exists"
-	docker tag ttl.sh/noobaa-tester:$COMMIT noobaa-tester
+	docker tag $REMOTE_IMAGE noobaa-tester
 else
 	make tester
-	docker tag noobaa-tester ttl.sh/noobaa-tester:$COMMIT
-	docker push ttl.sh/noobaa-tester:$COMMIT
+	docker tag noobaa-tester $REMOTE_IMAGE 
+	docker push $REMOTE_IMAGE 
 fi
 
 make test
