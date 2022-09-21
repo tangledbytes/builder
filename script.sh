@@ -21,4 +21,4 @@ else
 	docker push $REMOTE_IMAGE 
 fi
 
-make test
+make test-postgres
