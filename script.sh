@@ -1,32 +1,24 @@
 #!/bin/bash
 
-set -e
-
-function registry() {
-	local IMAGE_NAME=$(uuidgen)
-	local REF=ttl.sh/$IMAGE_NAME:2d
-
-	echo $REF
-}
-
-function docker_push() {
-	local REF=`registry`
-	docker tag $1 $REF
-	docker push $REF
-
-	echo "[PUSHED] $1 => $REF"
-}
-
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/upgrade/node-14-to-16 https://github.com/utkarsh-pro/noobaa-core.git
+git clone --depth=1 -b utkarsh-pro/upgrade/post-node16-dep-bump https://github.com/utkarsh-pro/noobaa-core.git
 
+# Run tests
 cd noobaa-core
 
-# Build the assets
-make noobaa
+# Git Commit
+COMMIT=$(git log --format="%H" -n 1)
+IMAGE_NAME="noobaa-tester"
+REMOTE_IMAGE="ttl.sh/noobaa-tester-$COMMIT:2d"
 
-# Push the docker image to ttl.sh
-docker_push noobaa
+# Check if image already exists on docker hub
+# if docker pull $REMOTE_IMAGE; then
+# 	echo "Image already exists"
+# 	docker tag $REMOTE_IMAGE noobaa-tester
+# else
+# 	make tester
+# 	docker tag noobaa-tester $REMOTE_IMAGE 
+# 	docker push $REMOTE_IMAGE 
+# fi
 
-# Upload the assets
-# mv build $GITHUB_WORKSPACE/artifacts/build
+make test-postgres
