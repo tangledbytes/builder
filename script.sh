@@ -2,31 +2,20 @@
 
 set -e
 
-function registry() {
-	local IMAGE_NAME=$(uuidgen)
-	local REF=ttl.sh/$IMAGE_NAME:2d
-
-	echo $REF
-}
-
-function docker_push() {
-	local REF=`registry`
-	docker tag $1 $REF
-	docker push $REF
-
-	echo "[PUSHED] $1 => $REF"
-}
+# Setup a kind cluster
+kind create cluster
 
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/fix/fips https://github.com/utkarsh-pro/noobaa-core.git
+git clone --depth=1 https://github.com/utkarsh-pro/noobaa-core.git
 
 cd noobaa-core
 
-# Build the assets
-make noobaa
+# Build the tester
+make tester
 
-# Push the docker image to ttl.sh
-docker_push noobaa
+# Upload the tester image to the kind cluster
+kind load docker-image noobaa-tester
+kind load docker-image noobaa
 
-# Upload the assets
-# mv build $GITHUB_WORKSPACE/artifacts/build
+# Run the ceph test
+cd ./src/test/framework/ && ./run_test_job.sh --name s3-tests --image noobaa --tester_image noobaa-tester --tests_list ./system_tests_list.js --job_yaml ../../../.travis/travis_test_job.yaml --wait
