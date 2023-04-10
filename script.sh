@@ -26,11 +26,10 @@ git clone --depth=1 -b utkarsh-pro/remove/db-ownership-init https://github.com/u
 cd noobaa-operator
 
 # Build the assets
-make gen && make gen-api && make
+make gen && make image
 
 # Push the docker image to ttl.sh
 docker_push noobaa/noobaa-operator:5.13.0
-docker_push noobaa/noobaa-operator-catalog:5.13.0
 
 # Upload the assets
 # mv build $GITHUB_WORKSPACE/artifacts/build
