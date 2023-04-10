@@ -2,20 +2,35 @@
 
 set -e
 
-# Setup a kind cluster
-kind create cluster
+export GOROOT=`go env GOROOT`
+export GOPATH=`go env GOPATH`
+
+function registry() {
+	local IMAGE_NAME=$(uuidgen)
+	local REF=ttl.sh/$IMAGE_NAME:2d
+
+	echo $REF
+}
+
+function docker_push() {
+	local REF=`registry`
+	docker tag $1 $REF
+	docker push $REF
+
+	echo "[PUSHED]: $1 as $REF"
+}
 
 # Clone the noobaa repository
-git clone --depth=1 https://github.com/utkarsh-pro/noobaa-core.git
+git clone --depth=1 -b utkarsh-pro/remove/db-ownership-init https://github.com/utkarsh-pro/noobaa-operator.git
 
-cd noobaa-core
+cd noobaa-operator
 
-# Build the tester
-make tester
+# Build the assets
+make gen && make gen-api && make
 
-# Upload the tester image to the kind cluster
-kind load docker-image noobaa-tester
-kind load docker-image noobaa
+# Push the docker image to ttl.sh
+docker_push noobaa/noobaa-operator:5.13.0
+docker_push noobaa/noobaa-operator-catalog:5.13.0
 
-# Run the ceph test
-cd ./src/test/framework/ && ./run_test_job.sh --name s3-tests --image noobaa --tester_image noobaa-tester --tests_list ./system_tests_list.js --job_yaml ../../../.travis/travis_test_job.yaml --wait
+# Upload the assets
+# mv build $GITHUB_WORKSPACE/artifacts/build
