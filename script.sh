@@ -21,7 +21,7 @@ function docker_push() {
 }
 
 # Clone the noobaa repository
-git clone --depth=1 -b utkarsh-pro/remove/db-ownership-init https://github.com/utkarsh-pro/noobaa-operator.git
+git clone --depth=1 -b utkarsh-pro/fix/db-scc-on-upgrade https://github.com/utkarsh-pro/noobaa-operator.git
 
 cd noobaa-operator
 
