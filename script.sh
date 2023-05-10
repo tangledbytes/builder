@@ -11,13 +11,14 @@ docker run --privileged --rm tonistiigi/binfmt --install all
 # Clone the noobaa repository
 git clone --depth=1 -b utkarsh-pro/add/rpm-builds https://github.com/utkarsh-pro/noobaa-core.git
 cd noobaa-core
+mkdir -p build/rpm
 
 # Build RPM for amd64 and ppc64le
 make rpm PLATFORM=amd64 BUILD_S3SELECT=BUILD_S3SELECT=0
 make rpm PLATFORM=ppc64le BUILD_S3SELECT=BUILD_S3SELECT=0
 
 # Upload the assets
-mv build $GITHUB_WORKSPACE/artifacts/build
+sudo mv build $GITHUB_WORKSPACE/artifacts/build
 
 # Build the tester
 # make tester
