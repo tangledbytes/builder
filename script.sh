@@ -2,6 +2,24 @@
 
 set -e
 
+function retryop() {
+	local n=1
+	local max=5
+	local delay=15
+	while true; do
+		"$@" && break || {
+			if [[ $n -lt $max ]]; then
+				((n++))
+				echo "Command failed. Attempt $n/$max:"
+				sleep $delay;
+			else
+				echo "The command has failed after $n attempts."
+				return 1
+			fi
+		}
+	done
+}
+
 # Setup a kind cluster
 # kind create cluster
 
@@ -14,11 +32,13 @@ cd noobaa-core
 mkdir -p build/rpm
 
 # Build RPM for amd64 and ppc64le
-make rpm PLATFORM=amd64 BUILD_S3SELECT=BUILD_S3SELECT=0
-make rpm PLATFORM=ppc64le BUILD_S3SELECT=BUILD_S3SELECT=0
+retry make rpm PLATFORM=amd64 BUILD_S3SELECT=BUILD_S3SELECT=0
+sudo mv -f build/rpm/* $GITHUB_WORKSPACE/artifacts/build/rpm/
+
+retry make rpm PLATFORM=ppc64le BUILD_S3SELECT=BUILD_S3SELECT=0
+sudo mv -f build/rpm/* $GITHUB_WORKSPACE/artifacts/build/rpm/
 
 # Upload the assets
-sudo mv build $GITHUB_WORKSPACE/artifacts/build
 
 # Build the tester
 # make tester
