@@ -32,10 +32,10 @@ cd noobaa-core
 mkdir -p build/rpm
 
 # Build RPM for amd64 and ppc64le
-retry make rpm PLATFORM=amd64 BUILD_S3SELECT=BUILD_S3SELECT=0
+retryop make rpm PLATFORM=amd64 BUILD_S3SELECT=BUILD_S3SELECT=0
 sudo mv -f build/rpm/* $GITHUB_WORKSPACE/artifacts/build/rpm/
 
-retry make rpm PLATFORM=ppc64le BUILD_S3SELECT=BUILD_S3SELECT=0
+retryop make rpm PLATFORM=ppc64le BUILD_S3SELECT=BUILD_S3SELECT=0
 sudo mv -f build/rpm/* $GITHUB_WORKSPACE/artifacts/build/rpm/
 
 # Upload the assets
