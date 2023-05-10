@@ -30,6 +30,7 @@ docker run --privileged --rm tonistiigi/binfmt --install all
 git clone --depth=1 -b utkarsh-pro/add/rpm-builds https://github.com/utkarsh-pro/noobaa-core.git
 cd noobaa-core
 mkdir -p build/rpm
+mkdir -p $GITHUB_WORKSPACE/artifacts/build/rpm
 
 # Build RPM for amd64 and ppc64le
 retryop make rpm PLATFORM=amd64 BUILD_S3SELECT=BUILD_S3SELECT=0
